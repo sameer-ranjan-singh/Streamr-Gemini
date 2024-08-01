@@ -1,3 +1,38 @@
+# create-react-app
+# configure tailwindcss
+# react-router-dom
+# folderStructure : components , utils
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
