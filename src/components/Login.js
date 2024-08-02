@@ -1,12 +1,27 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Header from "./Header";
 import { Link } from "react-router-dom";
+import { checkValidData } from "../utils/validate";
 
 function Login() {
   const [isSignIn, setIsSignIn] = useState(true);
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  const email = useRef(null);
+  const password = useRef(null);
 
   const toggleSign = () => {
     setIsSignIn(!isSignIn);
+  };
+
+  const handleButtonClick = () => {
+    console.log(email.current.value);
+    console.log(password.current.value);
+
+    const message = checkValidData(email.current.value, password.current.value);
+    console.log(message);
+
+    setErrorMessage(message);
   };
 
   return (
@@ -22,32 +37,43 @@ function Login() {
 
         <Header />
 
-        <form className="w-4/12 absolute p-12 bg-black  my-24 mx-auto left-0 right-0 text-white bg-opacity-90">
+        <form
+          onSubmit={(e) => e.preventDefault()}
+          className="w-4/12 absolute p-12 bg-black  my-24 mx-auto left-0 right-0 text-white bg-opacity-90"
+        >
           <h1 className="text-3xl font-bold py-4 ">
             {isSignIn ? "Sign In" : "Sign Up"}
           </h1>
           <div>
-            {!isSignIn && <input
-              type="text"
-              placeholder="Full Name"
-              className="my-2 p-4 w-full bg-neutral-900 text-neutral-400 border border-neutral-400 rounded-md"
-            />}
+            {!isSignIn && (
+              <input
+                type="text"
+                placeholder="Full Name"
+                className="my-2 p-4 w-full bg-neutral-900 text-neutral-400 border border-neutral-400 rounded-md"
+              />
+            )}
             <input
+              ref={email}
               type="text"
               placeholder="Email"
               className="my-2 p-4 w-full bg-neutral-900 text-neutral-400 border border-neutral-400 rounded-md"
             />
             <input
+              ref={password}
               type="password"
               placeholder="Password"
               className="my-2 p-4 w-full bg-neutral-900 text-neutral-400 border border-neutral-400 rounded-md "
             />
-            <button className=" bg-red-700  p-2 rounded-md  font-bold  w-full ">
+
+            <p className="text-red-700 font-bold  my-2">* {errorMessage}</p>
+
+            <button
+              onClick={handleButtonClick}
+              className=" bg-red-700  p-2 rounded-md  font-bold  w-full "
+            >
               {isSignIn ? "Sign In" : "Sign Up"}
             </button>
-            {/* <button className=" mx-2 mt-2 p-2 w-full bg-stone-700  bg-opacity-80 text-bold rounded-md font-bold ">
-              Use a sign-in code
-              </button> */}
+
             {isSignIn ? (
               <>
                 <h1 className=" m-4 text-xl text-neutral-400 text-center">
@@ -70,24 +96,26 @@ function Login() {
           </div>
           {isSignIn ? (
             <h1 className="mx-2 my-4">
-            New to Netflix?
-            <span
-              className="font-bold hover:underline cursor-pointer"
-              onClick={toggleSign}
-            >
-              {" "}Sign Up Now !
-            </span>
-          </h1>
-          ): (
+              New to Netflix?
+              <span
+                className="font-bold hover:underline cursor-pointer"
+                onClick={toggleSign}
+              >
+                {" "}
+                Sign Up Now !
+              </span>
+            </h1>
+          ) : (
             <h1 className="mx-2 my-4">
-            Already have an account?
-            <span
-              className="font-bold hover:underline cursor-pointer"
-              onClick={toggleSign}
-            >
-              {" "}Login !
-            </span>
-          </h1>
+              Already have an account?
+              <span
+                className="font-bold hover:underline cursor-pointer"
+                onClick={toggleSign}
+              >
+                {" "}
+                Login !
+              </span>
+            </h1>
           )}
         </form>
       </div>
