@@ -3,7 +3,9 @@ import Body from './components/Body';
 
 function App() {
   return (
-    <Body></Body>
+    // <div className=' bg-gradient-to-b from-black'>
+      <Body></Body>
+    // </div>
   );
 }
 

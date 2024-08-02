@@ -1,9 +1,149 @@
-import React from 'react'
+import React, { useState } from "react";
+import Header from "./Header";
+import { Link } from "react-router-dom";
 
 function Login() {
+  const [isSignIn, setIsSignIn] = useState(true);
+
+  const toggleSign = () => {
+    setIsSignIn(!isSignIn);
+  };
+
   return (
-    <div>Login</div>
-  )
+    <>
+      <div className="">
+        <div className="absolute">
+          <img
+            className=""
+            alt="bg-theme"
+            src="https://assets.nflxext.com/ffe/siteui/vlv3/826348c2-cdcb-42a0-bc11-a788478ba5a2/6d20b198-e7ab-4e9f-a1aa-666faa0298f9/IN-en-20240729-POP_SIGNUP_TWO_WEEKS-perspective_WEB_a67d8c9e-8121-4a74-98e4-8005eb2df227_small.jpg"
+          />
+        </div>
+
+        <Header />
+
+        <form className="w-4/12 absolute p-12 bg-black  my-24 mx-auto left-0 right-0 text-white bg-opacity-90">
+          <h1 className="text-3xl font-bold py-4 ">
+            {isSignIn ? "Sign In" : "Sign Up"}
+          </h1>
+          <div>
+            {!isSignIn && <input
+              type="text"
+              placeholder="Full Name"
+              className="my-2 p-4 w-full bg-neutral-900 text-neutral-400 border border-neutral-400 rounded-md"
+            />}
+            <input
+              type="text"
+              placeholder="Email"
+              className="my-2 p-4 w-full bg-neutral-900 text-neutral-400 border border-neutral-400 rounded-md"
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              className="my-2 p-4 w-full bg-neutral-900 text-neutral-400 border border-neutral-400 rounded-md "
+            />
+            <button className=" bg-red-700  p-2 rounded-md  font-bold  w-full ">
+              {isSignIn ? "Sign In" : "Sign Up"}
+            </button>
+            {/* <button className=" mx-2 mt-2 p-2 w-full bg-stone-700  bg-opacity-80 text-bold rounded-md font-bold ">
+              Use a sign-in code
+              </button> */}
+            {isSignIn ? (
+              <>
+                <h1 className=" m-4 text-xl text-neutral-400 text-center">
+                  OR
+                </h1>
+                <button className=" mx-2 mt-2 p-2 w-full bg-stone-700  bg-opacity-80 text-bold rounded-md font-bold ">
+                  Use a sign-in code
+                </button>
+              </>
+            ) : null}
+            <Link className="m-2">
+              <h1 className="text-center hover:underline font-semibold">
+                Forgot password ?
+              </h1>
+            </Link>
+          </div>
+          <div>
+            <input type="checkbox" className="mx-2 size-4" />
+            <label className=" ">Remember me ?</label>
+          </div>
+          {isSignIn ? (
+            <h1 className="mx-2 my-4">
+            New to Netflix?
+            <span
+              className="font-bold hover:underline cursor-pointer"
+              onClick={toggleSign}
+            >
+              {" "}Sign Up Now !
+            </span>
+          </h1>
+          ): (
+            <h1 className="mx-2 my-4">
+            Already have an account?
+            <span
+              className="font-bold hover:underline cursor-pointer"
+              onClick={toggleSign}
+            >
+              {" "}Login !
+            </span>
+          </h1>
+          )}
+        </form>
+      </div>
+    </>
+  );
 }
 
-export default Login
+export default Login;
+
+/*
+<form className="absolute text-white bg-black w-4/12 h-full mt-20  mx-auto left-0 right-0 flex flex-col justify-center items-center bg-opacity-80">
+    <input type="text" placeholder="Email" className="m-2 p-4 rounded-sm w-8/12 bg-neutral-900 text-neutral-400 border border-neutral-400" />
+    <input type="password" placeholder="Password" className="m-2 p-4 rounded-sm w-8/12 bg-neutral-900 text-neutral-400 border border-neutral-400" />
+    <button className="inset bg-red-600  p-2 rounded-md  font-bold font-serif w-8/12 ">Sign In</button>
+    <span className=" m-4 text-xl text-neutral-400">OR</span> 
+    <button className=" bg-stone-700  bg-opacity-60 text-bold p-2 rounded-md font-bold w-8/12 ">Use a sign-in code</button>
+    <Link className="m-2">Forgot password ?</Link>
+
+    <input type="checkbox" className=""/>
+    <label className=" ">Remember me ?</label>
+</form>
+*/
+
+// import React from "react";
+// import Header from "./Header";
+
+// function Login() {
+//   return (
+//     <>
+//       {/* Background image container */}
+//       <div className="relative h-screen overflow-hidden">
+//         <img
+//           className="absolute inset-0 object-cover w-full h-full z-0"
+//           alt="bg-theme"
+//           src="https://assets.nflxext.com/ffe/siteui/vlv3/826348c2-cdcb-42a0-bc11-a788478ba5a2/6d20b198-e7ab-4e9f-a1aa-666faa0298f9/IN-en-20240729-POP_SIGNUP_TWO_WEEKS-perspective_WEB_a67d8c9e-8121-4a74-98e4-8005eb2df227_small.jpg"
+//         />
+
+//         {/* Form container */}
+//         <form className="absolute top-1/2 left-1/2 transform translate-y-[-50%] translate-x-[-50%] bg-black w-4/12 p-8 rounded-md shadow-md flex flex-col justify-center items-center">
+//           <input
+//             type="text"
+//             placeholder="Email"
+//             className="m-2 p-2 rounded-md w-full focus:outline-none focus:border-blue-500"
+//           />
+//           <input
+//             type="password"
+//             placeholder="Password"
+//             className="m-2 p-2 rounded-md w-full focus:outline-none focus:border-blue-500"
+//           />
+//           <button className="bg-red-600 p-2 rounded-md font-bold font-serif w-full text-white hover:bg-red-700">
+//             Sign In
+//           </button>
+//         </form>
+//       </div>
+//     </>
+//   );
+// }
+
+// export default Login;

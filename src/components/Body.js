@@ -1,30 +1,34 @@
 import { createBrowserRouter,RouterProvider, useRouteError } from "react-router-dom";
 import Login from "./Login";
 import Browse from "./Browse";
+import Signup from "./Signup";
 
 const Body = () => {
-    const router = createBrowserRouter([
+    const appRouter = createBrowserRouter([
         {
             path:"/",
-            element:,
-            errorElement:,
+            element:<Login/>,
+            // errorElement:
         },
         {
             path:"/login",
             element:<Login/>,
-            errorElement:,
+            // errorElement:
+        },
+        {
+          path:"/signup",
+          element:<Signup/>,
+          // errorElement:
         },
         {
             path:"/browse",
             element:<Browse/>,
-            errorElement:
+            // errorElement:
         },
     ])
   return (
     <>
-      <div className="text-center bg-orange-400 p-2 m-2 ">
-        <span>Sameer Ranjan Singh</span>
-      </div>
+      <RouterProvider router={appRouter}/>
     </>
   );
 };
