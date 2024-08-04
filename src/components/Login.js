@@ -34,8 +34,9 @@ function Login() {
             src="https://assets.nflxext.com/ffe/siteui/vlv3/826348c2-cdcb-42a0-bc11-a788478ba5a2/6d20b198-e7ab-4e9f-a1aa-666faa0298f9/IN-en-20240729-POP_SIGNUP_TWO_WEEKS-perspective_WEB_a67d8c9e-8121-4a74-98e4-8005eb2df227_small.jpg"
           />
         </div>
-
-        <Header />
+        <div>
+          <Header />
+        </div>
 
         <form
           onSubmit={(e) => e.preventDefault()}
@@ -65,11 +66,13 @@ function Login() {
               className="my-2 p-4 w-full bg-neutral-900 text-neutral-400 border border-neutral-400 rounded-md "
             />
 
-            <p className="text-red-700 font-bold  my-2">* {errorMessage}</p>
+            <p className="text-red-700 font-bold  my-2">
+                {errorMessage}
+            </p>
 
             <button
               onClick={handleButtonClick}
-              className=" bg-red-700  p-2 rounded-md  font-bold  w-full "
+              className=" bg-red-700  p-2 rounded-md  font-bold  w-full"
             >
               {isSignIn ? "Sign In" : "Sign Up"}
             </button>
