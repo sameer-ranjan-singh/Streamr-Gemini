@@ -1,19 +1,27 @@
-import React, { useRef, useState } from "react";
-import Header from "./Header";
-import { Link } from "react-router-dom";
+import { useRef, useState } from "react";
 import { checkValidData } from "../utils/validate";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
+import { Link, useNavigate } from "react-router-dom";
+import Header from "./Header";
+import { useDispatch } from "react-redux";
+import { addUser } from "../store/Slices/userSlice";
 
 function Login() {
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
 
+  const dispatch = useDispatch()
+
+  const name = useRef(null);
   const email = useRef(null);
   const password = useRef(null);
+
+  const navigate = useNavigate();
 
   const toggleSign = () => {
     setIsSignInForm(!isSignInForm);
@@ -37,6 +45,21 @@ function Login() {
         .then((userCredential) => {
           // Signed up
           const user = userCredential.user;
+          updateProfile(user, {
+            displayName: name.current.value,
+            photoURL:
+              "https://media.licdn.com/dms/image/D5635AQG9CaJKG3Yspg/profile-framedphoto-shrink_100_100/0/1719451336209?e=1723464000&v=beta&t=vPSeqmzdvHZyiT3riLVEaX1BENuBgl-Wx984319_fn0",
+          })
+            .then(() => {
+              // Profile updated!
+              const {uid, email, displayName, photoURL} = auth.currentUser ;
+              dispatch(addUser({uid: uid , email: email, displayName: displayName, photoURL: photoURL}))
+              navigate("/browse");
+            })
+            .catch((error) => {
+              setErrorMessage(error.message);
+            });
+
           console.log(user);
         })
         .catch((error) => {
@@ -47,10 +70,16 @@ function Login() {
         });
     } else {
       //signIn Logic
-      signInWithEmailAndPassword(auth, email.current.value, password.current.value)
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
+          navigate("/browse");
+
           console.log(user);
         })
         .catch((error) => {
@@ -88,6 +117,7 @@ function Login() {
           <div>
             {!isSignInForm && (
               <input
+                ref={name}
                 type="text"
                 placeholder="Full Name"
                 className="my-2 p-4 w-full bg-neutral-900 text-neutral-400 border border-neutral-400 rounded-md"
