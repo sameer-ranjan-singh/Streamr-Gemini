@@ -2,16 +2,21 @@ import React, { useRef, useState } from "react";
 import Header from "./Header";
 import { Link } from "react-router-dom";
 import { checkValidData } from "../utils/validate";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { auth } from "../utils/firebase";
 
 function Login() {
-  const [isSignIn, setIsSignIn] = useState(true);
+  const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
 
   const email = useRef(null);
   const password = useRef(null);
 
   const toggleSign = () => {
-    setIsSignIn(!isSignIn);
+    setIsSignInForm(!isSignInForm);
   };
 
   const handleButtonClick = () => {
@@ -19,8 +24,43 @@ function Login() {
     console.log(password.current.value);
 
     const message = checkValidData(email.current.value, password.current.value);
-    console.log(message);
+    console.log("isSignInForm " + isSignInForm);
+    if (message) return "null message";
 
+    if (!isSignInForm) {
+      //signup logic
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed up
+          const user = userCredential.user;
+          console.log(user);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessagefb = error.message;
+          setErrorMessage(errorMessagefb);
+          console.log(errorCode + " - " + errorMessagefb);
+        });
+    } else {
+      //signIn Logic
+      signInWithEmailAndPassword(auth, email.current.value, password.current.value)
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          console.log(user);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessagefb = error.message;
+          setErrorMessage(errorMessagefb);
+          console.log(errorCode + " - " + errorMessagefb);
+        });
+    }
+    console.log("message :" + message);
     setErrorMessage(message);
   };
 
@@ -43,10 +83,10 @@ function Login() {
           className="w-4/12 absolute p-12 bg-black  my-24 mx-auto left-0 right-0 text-white bg-opacity-90"
         >
           <h1 className="text-3xl font-bold py-4 ">
-            {isSignIn ? "Sign In" : "Sign Up"}
+            {isSignInForm ? "Sign In" : "Sign Up"}
           </h1>
           <div>
-            {!isSignIn && (
+            {!isSignInForm && (
               <input
                 type="text"
                 placeholder="Full Name"
@@ -66,18 +106,16 @@ function Login() {
               className="my-2 p-4 w-full bg-neutral-900 text-neutral-400 border border-neutral-400 rounded-md "
             />
 
-            <p className="text-red-700 font-bold  my-2">
-                {errorMessage}
-            </p>
+            <p className="text-red-700 font-bold  my-2">{errorMessage}</p>
 
             <button
               onClick={handleButtonClick}
               className=" bg-red-700  p-2 rounded-md  font-bold  w-full"
             >
-              {isSignIn ? "Sign In" : "Sign Up"}
+              {isSignInForm ? "Sign In" : "Sign Up"}
             </button>
 
-            {isSignIn ? (
+            {isSignInForm ? (
               <>
                 <h1 className=" m-4 text-xl text-neutral-400 text-center">
                   OR
@@ -97,7 +135,7 @@ function Login() {
             <input type="checkbox" className="mx-2 size-4" />
             <label className=" ">Remember me ?</label>
           </div>
-          {isSignIn ? (
+          {isSignInForm ? (
             <h1 className="mx-2 my-4">
               New to Netflix?
               <span
