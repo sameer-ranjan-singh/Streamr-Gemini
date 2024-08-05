@@ -12,7 +12,7 @@
 /build
 
 #git
-/env
+/.env
 
 # misc
 .DS_Store
