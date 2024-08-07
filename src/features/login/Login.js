@@ -1,17 +1,30 @@
+<<<<<<< HEAD:src/features/login/Login.js
 import { useEffect, useRef, useState } from "react";
 import { checkValidData } from "../../utils/validate";
+=======
+import { useRef, useState } from "react";
+import { checkValidData } from "../utils/validate";
+>>>>>>> 1a85e2b1692649326374e2cb5a0a7b759a8017a7:src/components/Login.js
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signInWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
+<<<<<<< HEAD:src/features/login/Login.js
 import { auth } from "../../utils/firebase";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "../header/Header";
 import { useDispatch } from "react-redux";
 import { addUser, removeUser } from "../../store/Slices/userSlice";
 import { BG_IMAGE, USER_AVATAR } from "../../utils/constants";
+=======
+import { auth } from "../utils/firebase";
+import { Link, useNavigate } from "react-router-dom";
+import Header from "./Header";
+import { useDispatch } from "react-redux";
+import { addUser } from "../store/Slices/userSlice";
+>>>>>>> 1a85e2b1692649326374e2cb5a0a7b759a8017a7:src/components/Login.js
 
 function Login() {
   const [isSignInForm, setIsSignInForm] = useState(true);
@@ -47,15 +60,26 @@ function Login() {
         .then((userCredential) => {
           // Signed up
           const user = userCredential.user;
+<<<<<<< HEAD:src/features/login/Login.js
           console.log("Initial-Auth-User" , user)
           updateProfile(user, {
             displayName: name.current.value,
             photoURL: USER_AVATAR
+=======
+          updateProfile(user, {
+            displayName: name.current.value,
+            photoURL:
+              "https://media.licdn.com/dms/image/D5635AQG9CaJKG3Yspg/profile-framedphoto-shrink_100_100/0/1719451336209?e=1723464000&v=beta&t=vPSeqmzdvHZyiT3riLVEaX1BENuBgl-Wx984319_fn0",
+>>>>>>> 1a85e2b1692649326374e2cb5a0a7b759a8017a7:src/components/Login.js
           })
             .then(() => {
               // Profile updated!
               const {uid, email, displayName, photoURL} = auth.currentUser ;
               dispatch(addUser({uid: uid , email: email, displayName: displayName, photoURL: photoURL}))
+<<<<<<< HEAD:src/features/login/Login.js
+=======
+              navigate("/browse");
+>>>>>>> 1a85e2b1692649326374e2cb5a0a7b759a8017a7:src/components/Login.js
             })
             .catch((error) => {
               setErrorMessage(error.message);
@@ -79,6 +103,7 @@ function Login() {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
+<<<<<<< HEAD:src/features/login/Login.js
           updateProfile(user, {
             displayName: name.current.value,
             photoURL:
@@ -92,6 +117,9 @@ function Login() {
             .catch((error) => {
               setErrorMessage(error.message);
             });
+=======
+          navigate("/browse");
+>>>>>>> 1a85e2b1692649326374e2cb5a0a7b759a8017a7:src/components/Login.js
 
           console.log(user);
         })
