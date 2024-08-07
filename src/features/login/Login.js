@@ -1,15 +1,17 @@
-import { useRef, useState } from "react";
-import { checkValidData } from "../utils/validate";
+import { useEffect, useRef, useState } from "react";
+import { checkValidData } from "../../utils/validate";
 import {
   createUserWithEmailAndPassword,
+  onAuthStateChanged,
   signInWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
-import { auth } from "../utils/firebase";
+import { auth } from "../../utils/firebase";
 import { Link, useNavigate } from "react-router-dom";
-import Header from "./Header";
+import Header from "../header/Header";
 import { useDispatch } from "react-redux";
-import { addUser } from "../store/Slices/userSlice";
+import { addUser, removeUser } from "../../store/Slices/userSlice";
+import { BG_IMAGE, USER_AVATAR } from "../../utils/constants";
 
 function Login() {
   const [isSignInForm, setIsSignInForm] = useState(true);
@@ -48,14 +50,12 @@ function Login() {
           console.log("Initial-Auth-User" , user)
           updateProfile(user, {
             displayName: name.current.value,
-            photoURL:
-              "https://media.licdn.com/dms/image/D5635AQG9CaJKG3Yspg/profile-framedphoto-shrink_100_100/0/1719451336209?e=1723464000&v=beta&t=vPSeqmzdvHZyiT3riLVEaX1BENuBgl-Wx984319_fn0",
+            photoURL: USER_AVATAR
           })
             .then(() => {
               // Profile updated!
               const {uid, email, displayName, photoURL} = auth.currentUser ;
               dispatch(addUser({uid: uid , email: email, displayName: displayName, photoURL: photoURL}))
-              navigate("/browse");
             })
             .catch((error) => {
               setErrorMessage(error.message);
@@ -79,7 +79,19 @@ function Login() {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          navigate("/browse");
+          updateProfile(user, {
+            displayName: name.current.value,
+            photoURL:
+              "https://media.licdn.com/dms/image/D5635AQG9CaJKG3Yspg/profile-framedphoto-shrink_100_100/0/1719451336209?e=1723464000&v=beta&t=vPSeqmzdvHZyiT3riLVEaX1BENuBgl-Wx984319_fn0",
+          })
+            .then(() => {
+              // Profile updated!
+              const {uid, email, displayName, photoURL} = auth.currentUser ;
+              dispatch(addUser({uid: uid , email: email, displayName: displayName, photoURL: photoURL}))
+            })
+            .catch((error) => {
+              setErrorMessage(error.message);
+            });
 
           console.log(user);
         })
@@ -94,6 +106,23 @@ function Login() {
     setErrorMessage(message);
   };
 
+  useEffect(()=> {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in.
+        const {uid, email, displayName, photoURL} = user;
+        dispatch(addUser({uid: uid , email: email, displayName: displayName, photoURL: photoURL}))
+        navigate("/browse")
+      } else {
+        // User is signed out
+        dispatch(removeUser())
+        navigate("/")
+      }
+    })
+   
+    return ()=> unsubscribe()  //unsubscribe to onAuthStateChanged callback  when the component unmount
+  })
+
   return (
     <>
       <div className="">
@@ -101,7 +130,7 @@ function Login() {
           <img
             className=""
             alt="bg-theme"
-            src="https://assets.nflxext.com/ffe/siteui/vlv3/826348c2-cdcb-42a0-bc11-a788478ba5a2/6d20b198-e7ab-4e9f-a1aa-666faa0298f9/IN-en-20240729-POP_SIGNUP_TWO_WEEKS-perspective_WEB_a67d8c9e-8121-4a74-98e4-8005eb2df227_small.jpg"
+            src={BG_IMAGE}
           />
         </div>
         <div>
