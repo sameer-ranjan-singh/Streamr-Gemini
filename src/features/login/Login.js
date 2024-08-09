@@ -121,7 +121,7 @@ function Login() {
     })
    
     return ()=> unsubscribe()  //unsubscribe to onAuthStateChanged callback  when the component unmount
-  })
+  },[])
 
   return (
     <>
