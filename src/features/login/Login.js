@@ -30,12 +30,12 @@ function Login() {
   };
 
   const handleButtonClick = () => {
-    console.log(email.current.value);
-    console.log(password.current.value);
+    // console.log(email.current.value);
+    // console.log(password.current.value);
 
     const message = checkValidData(email.current.value, password.current.value);
     // if (message) return message ;
-    console.log(message)
+    // console.log(message)
 
     if (!isSignInForm) {
       //signup logic
@@ -47,7 +47,7 @@ function Login() {
         .then((userCredential) => {
           // Signed up
           const user = userCredential.user;
-          console.log("Initial-Auth-User" , user)
+          // console.log("Initial-Auth-User" , user)
           updateProfile(user, {
             displayName: name.current.value,
             photoURL: USER_AVATAR
@@ -61,13 +61,13 @@ function Login() {
               setErrorMessage(error.message);
             });
 
-          console.log(user);
+          // console.log(user);
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessagefb = error.message;
           setErrorMessage(message);
-          console.log(errorCode + " - " + errorMessagefb);
+          // console.log(errorCode + " - " + errorMessagefb);
         });
     } else {
       //signIn Logic
@@ -93,16 +93,16 @@ function Login() {
               setErrorMessage(error.message);
             });
 
-          console.log(user);
+          // console.log(user);
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessagefb = error.message;
           setErrorMessage(errorMessagefb);
-          console.log(errorCode + " - " + errorMessagefb);
+          // console.log(errorCode + " - " + errorMessagefb);
         });
     }
-    console.log("message :" + message);
+    // console.log("message :" + message);
     setErrorMessage(message);
   };
 
