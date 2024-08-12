@@ -6,8 +6,11 @@ import useNowPlayingMovies from "../../hooks/useNowPlayingMovies";
 import usePopularMovies from "../../hooks/usePopularMovies";
 import useTopRatedMovies from "../../hooks/useTopRatedMovies";
 import useUpcomingMovies from "../../hooks/useUpcomingMovies";
+import { useSelector } from "react-redux";
+import Gemini from "../gemini/Gemini";
 
 const Browse = () => {
+  const showGemini = useSelector((store)=> store.gemini.showGemini)
   useNowPlayingMovies()
   usePopularMovies()
   useTopRatedMovies()
@@ -15,10 +18,15 @@ const Browse = () => {
 
   return (
     <div>
-      <Header className="z-10"/>
-
-      <MainComponent></MainComponent>
-      <SecondaryComponent></SecondaryComponent>
+      <Header/>
+      {showGemini ? (
+        <Gemini/>
+      ):(
+      <>
+        <MainComponent></MainComponent>
+        <SecondaryComponent></SecondaryComponent>
+      </>
+      )}
     </div>
   );
 };

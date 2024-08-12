@@ -9,7 +9,6 @@ function MainComponent() {
   // if(movies == null) return ;  ---> both are known as early return 
 
   const mainMovie = movies.results[0];
-  // console.log(mainMovie)
 
   const {original_title, overview,release_date, original_language,id} = mainMovie
 
