@@ -1,5 +1,4 @@
 import { BG_IMAGE } from "../../utils/constants";
-import Header from "../header/Header";
 import GeminiMovieSuggestion from "./components/GeminiMovieSuggestion";
 import GeminiSearchBar from "./components/GeminiSearchBar";
 

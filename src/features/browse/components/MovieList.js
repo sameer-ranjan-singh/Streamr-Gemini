@@ -5,7 +5,7 @@ const MovieList = ({ title, movies }) => {
   return (
     <div className="mb-10">
       <h1 className="my-2 font-bold text-xl">{title + " >>"} </h1>
-      <div className="flex overflow-x-scroll">
+      <div className="flex custom-scrollbar">
         <div className="flex">
           {movies ? (
             movies.results.map((movie) => (

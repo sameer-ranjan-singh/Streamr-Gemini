@@ -10,6 +10,9 @@ export const getPopularMovies_URL = "https://api.themoviedb.org/3/movie/popular?
 export const getTopRatedMovies_URL = "https://api.themoviedb.org/3/movie/top_rated?page=1"
 export const getUpcomingMovies_URL = "https://api.themoviedb.org/3/movie/upcoming?page=1"
 
+//Search Movie By name 
+export const getMovieByName = (movieName) => `https://api.themoviedb.org/3/search/movie?query=${movieName}&include_adult=false&language=en-US&page=1`
+
 export const API_OPTIONS = {
 	method: 'GET',
 	headers: {
@@ -18,3 +21,4 @@ export const API_OPTIONS = {
 	}
   };
   
+export const GEMINI_API_KEY = "AIzaSyCwQh7o00XKfKqjW12MPv4nRGsmwG2kOwo"  
