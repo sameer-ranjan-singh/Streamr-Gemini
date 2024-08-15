@@ -8,7 +8,7 @@ function MainComponent() {
   if(!movies) return <h1 className='text-center'>{movies}</h1>  
   // if(movies == null) return ;  ---> both are known as early return 
 
-  const mainMovie = movies.results[0];
+  const mainMovie = movies[0];
 
   const {original_title, overview,release_date, original_language,id} = mainMovie
 

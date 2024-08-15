@@ -10,7 +10,7 @@ const useUpcomingMovies = () => {
      try{
        const data = await fetch(getUpcomingMovies_URL, API_OPTIONS)
        const jsonData = await data.json() 
-        dispatch(addUpcomingdMovies(jsonData))
+        dispatch(addUpcomingdMovies(jsonData.results))
         // console.log(jsonData.results)
      }catch(error){
        console.error(error)

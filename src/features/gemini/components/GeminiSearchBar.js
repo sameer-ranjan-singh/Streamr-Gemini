@@ -37,12 +37,13 @@ const GeminiSearchBar = () => {
       //Todo : handle error
     }
     const geminiMovies = text.split(",") 
-    // console.log(geminiMovies);
+    console.log(geminiMovies);
     
     const promiseArrayTMDB = geminiMovies.map((movie)=> searchMovieTMDB(movie))
     const promiseResultsTMDB = await Promise.all(promiseArrayTMDB)
-    // console.log(promiseResultsTMDB);
+    console.log(promiseResultsTMDB);
 
+    // dispatch(addGeminiResultMovies({movieSearched: geminiMovies , movieResults: promiseResultsTMDB[0]}))
     dispatch(addGeminiResultMovies({movieSearched: geminiMovies , movieResults: promiseResultsTMDB}))
      
     };
@@ -50,19 +51,19 @@ const GeminiSearchBar = () => {
   return (
     <div className="pt-[10%] flex justify-center ">
       <form
-        className="w-1/2 rounded-xl bg-black bg-opacity-70 grid grid-cols-12"
+        className="w-1/2 bg-black bg-opacity-90 grid grid-cols-12"
         onSubmit={(e) => e.preventDefault()}
       >
         <input
           ref={userText}
           type="text"
-          className="p-4 m-4 col-span-9  outline-none"
+          className="py-2 pl-4 mx-4 my-2 col-span-9  outline-none font-bold rounded-md capitalize"
           placeholder={lang[storeLangKey].geminiSearchPlaceholder}
         />
 
         <button
           onClick={handleGeminiSearch}
-          className="col-span-3  m-4 py-2 px-4 text-2xl font-bold text-white bg-red-700  hover:bg-red-600"
+          className="col-span-3  m-2  flex justify-center item-center text-center capitalize  rounded-md px-4 text-2xl font-bold text-white bg-red-700  hover:bg-red-600"
         >
           {lang[storeLangKey].search}
         </button>

@@ -17,8 +17,8 @@ export const API_OPTIONS = {
 	method: 'GET',
 	headers: {
 	  accept: 'application/json',
-	  Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2NTViYmIzZGE0NTU3NTQxYTMwYWJmOTQ0MzUwYjdmZSIsIm5iZiI6MTcyMzAwNDQyNy4yNDI2OTgsInN1YiI6IjY2YjJmMWQ4NDM3ZjVkNTY3YTUxODQyMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.5q6Oou6s78fWjvSw3ciYZJYrLpt_EC_JT6IOqkQZ_dA'
+	  Authorization: 'Bearer ' + process.env.REACT_APP_TMDB_KEY
 	}
   };
   
-export const GEMINI_API_KEY = "AIzaSyCwQh7o00XKfKqjW12MPv4nRGsmwG2kOwo"  
+export const GEMINI_API_KEY = process.env.REACT_APP_GEMINI_API_KEY 

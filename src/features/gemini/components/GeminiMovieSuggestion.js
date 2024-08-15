@@ -1,12 +1,30 @@
-import React from 'react'
+import React from "react";
+import { useSelector } from "react-redux";
+import MovieList from "../../browse/components/MovieList";
 
 const GeminiMovieSuggestion = () => {
-  return (
-    <div 
-     className='border border-red-400 rounded-xl m-2 p-3'>
-        GeminiMovieSuggestion
-    </div>
-  )
-}
+  const { movieSearched, movieResults } = useSelector((store) => store.gemini);
+  console.log(movieResults);
 
-export default GeminiMovieSuggestion
+  return (
+      <div className="m-10 p-3 bg-opacity-90 bg-black text-white ">
+        <div className="overflow-x-auto mx-4 ">
+          {movieSearched ? (
+            movieSearched.map((nameOfMovie, index) => (
+              <div className="custom-scrollbary ">
+                <MovieList
+                  key={nameOfMovie}
+                  title={nameOfMovie}
+                  movies={movieResults[index]}
+                />
+              </div>
+            ))
+          ) : (
+            <h1 className="text-center text-gray-300 font-bold text-2xl">Search for your favourite Movie</h1>
+          )}
+        </div>
+      </div>
+  );
+};
+
+export default GeminiMovieSuggestion;

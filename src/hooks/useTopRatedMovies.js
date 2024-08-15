@@ -10,7 +10,7 @@ const useTopRatedMovies = () => {
      try{
        const data = await fetch(getTopRatedMovies_URL, API_OPTIONS)
        const jsonData = await data.json() 
-        dispatch(addTopRatedMovies(jsonData))
+        dispatch(addTopRatedMovies(jsonData.results))
         // console.log(jsonData.results)
      }catch(error){
        console.error(error)

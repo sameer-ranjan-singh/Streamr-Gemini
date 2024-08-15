@@ -12,7 +12,7 @@ const usePopularMovies = () => {
      try{
        const data = await fetch(getPopularMovies_URL, API_OPTIONS)
        const jsonData = await data.json() 
-        dispatch(addPopularMovies(jsonData))
+        dispatch(addPopularMovies(jsonData.results))
         // console.log(jsonData.results)
      }catch(error){
        console.error(error)
