@@ -1,16 +1,27 @@
+import { useDispatch } from "react-redux";
 import { BG_IMAGE } from "../../utils/constants";
 import GeminiMovieSuggestion from "./components/GeminiMovieSuggestion";
 import GeminiSearchBar from "./components/GeminiSearchBar";
+import { clearGeminiStore } from "../../store/Slices/geminiSlice";
 
 export const Gemini = () => {
+  const dispatch = useDispatch();
+  dispatch(clearGeminiStore());
+
   return (
-    <div className="">
+    <>
       <div className="fixed -z-10">
-        <img className="" alt="bg-theme" src={BG_IMAGE} />
+        <img
+          className="h-screen object-cover md:w-screen"
+          alt="bg-theme"
+          src={BG_IMAGE}
+        />
       </div>
-      <GeminiSearchBar/>
-      <GeminiMovieSuggestion/>
-    </div>
+      <div>
+        <GeminiSearchBar />
+        <GeminiMovieSuggestion />
+      </div>
+    </>
   );
 };
 

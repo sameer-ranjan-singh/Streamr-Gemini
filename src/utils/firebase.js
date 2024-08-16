@@ -12,7 +12,7 @@ const firebaseConfig = {
   projectId: "streamr-d3fda",
   storageBucket: "streamr-d3fda.appspot.com",
   messagingSenderId: "875298074620",
-  appId: "1:875298074620:web:1e1e79eab6986071ef4c79"
+  appId: process.env.REACT_APP_FIREBASE_KEY
 };
 
 // Initialize Firebase

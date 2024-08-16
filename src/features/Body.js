@@ -1,6 +1,7 @@
 import { createBrowserRouter,RouterProvider } from "react-router-dom";
 import Login from "./login/Login";
 import Browse from "./browse/Browse";
+import ErrorBoundary from "./error/ErrorBoundary";
 
 const Body = () => {
   
@@ -8,22 +9,22 @@ const Body = () => {
         {
             path:"/",
             element:<Login/>,
-            // errorElement:
+            errorElement: <ErrorBoundary/>
         },
         {
             path:"/login",
             element:<Login/>,
-            // errorElement:
+            errorElement: <ErrorBoundary/>,
         },
         {
           path:"/signup",
           element:<Login/>,
-          // errorElement:
+          errorElement: <ErrorBoundary/>,
         },
         {
             path:"/browse",
             element:<Browse/>,
-            // errorElement:
+            errorElement: <ErrorBoundary/>,
         },
     ])
 

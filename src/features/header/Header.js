@@ -1,12 +1,16 @@
-import { signOut } from "firebase/auth";
-import React from "react";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import React, { useEffect } from "react";
 import { auth } from "../../utils/firebase";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { LOGO } from "../../utils/constants";
 import { SUPPORTED_LANGUAGES } from "../../utils/languageConstants";
 import { changeLanguage } from "../../store/Slices/appConfigSlice";
-import { toggleGeminiSearch } from "../../store/Slices/geminiSlice";
+import {
+  clearGeminiStore,
+  toggleShowGemini,
+} from "../../store/Slices/geminiSlice";
+import { addUser, removeUser } from "../../store/Slices/userSlice";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -14,7 +18,7 @@ const Header = () => {
   const userInfo = useSelector((store) => store.user);
   const showGemini = useSelector((store) => store.gemini.showGemini);
 
-  const handleAccessClick = () => {
+  const handleSignOut = () => {
     signOut(auth)
       .then(() => {
         // Sign-out successful.
@@ -31,19 +35,40 @@ const Header = () => {
   };
 
   const handleGemniBtnClick = (e) => {
-    dispatch(toggleGeminiSearch());
-    // navigate("/askGemini")
+    dispatch(clearGeminiStore());
+    dispatch(toggleShowGemini());
   };
 
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in.
+        const { uid, email, displayName, photoURL } = user;
+        dispatch(
+          addUser({
+            uid: uid,
+            email: email,
+            displayName: displayName,
+            photoURL: photoURL,
+          })
+        );
+        navigate("/browse");
+      } else {
+        // User is signed out
+        dispatch(removeUser());
+        navigate("/");
+      }
+    });
+
+    return () => unsubscribe(); //unsubscribe to onAuthStateChanged callback  when the component unmount
+  }, []);
   return (
-    <div className="absolute pl-28 py-4 bg-gradient-to-b from-black z-10 w-screen flex justify-between items-center">
-      <div className="">
-        <img className="w-48" alt="netflix logo" src={LOGO} />
-      </div>
-      <div className="flex">
+    <div className="absolute  px-4 md:px-8 py-2 bg-gradient-to-b from-black z-10 w-screen flex justify-between items-center">
+      <img className="w-24  md:w-44  md:mx-0" alt="netflix logo" src={LOGO} />
+      <div className="flex  w-1/2 justify-end items-center">
         {showGemini && (
           <select
-            className="h-12 mx-2 px-2 bg-gray-800 text-gray-200"
+            className="h-6 md:h-10 mr-2  text-sm md:text-base bg-gray-800 text-gray-200"
             onChange={handleLanguageChange}
           >
             {SUPPORTED_LANGUAGES.map((language) => (
@@ -55,27 +80,20 @@ const Header = () => {
         )}
 
         <button
-          className="px-3 h-12 rounded-xl font-semibold bg-blue-700 text-white"
+          className="px-2 md:px-3 h-7 md:h-9 text-sm md:text-lg md:rounded-md hover:bg-blue-800 hover:text-white font-bold bg-yellow-500 text-black"
           onClick={handleGemniBtnClick}
         >
-          {showGemini ? "Home" : "Ask Gemini"}
+          {showGemini ? "Browse" : "Gen-AI"}
         </button>
-        {userInfo ? (
-          <div className="flex px-4 ">
-            <img
-              src={userInfo.photoURL}
-              alt="profile logo"
-              className="h-12 w-12 rounded-3xl"
-            />
+        {userInfo && (
+          <div className="flex pl-4 ">
             <button
-              onClick={handleAccessClick}
-              className="h-12 w-16 font-bold text-red-600 border border-black"
+              onClick={handleSignOut}
+              className="text-sm md:text-lg p-1 font-bold text-red-600 border border-red-600 hover:bg-red-600 hover:text-white"
             >
               Logout
             </button>
           </div>
-        ) : (
-          <h1 className="p-2 text-white">No User</h1>
         )}
       </div>
     </div>

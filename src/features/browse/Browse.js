@@ -10,26 +10,25 @@ import { useSelector } from "react-redux";
 import Gemini from "../gemini/Gemini";
 
 const Browse = () => {
-  const showGemini = useSelector((store)=> store.gemini.showGemini)
-  useNowPlayingMovies()
-  usePopularMovies()
-  useTopRatedMovies()
-  useUpcomingMovies()
+  const showGemini = useSelector((store) => store.gemini.showGemini);
+  useNowPlayingMovies();
+  usePopularMovies();
+  useTopRatedMovies();
+  useUpcomingMovies();
 
   return (
     <div>
-      <Header/>
+      <Header />
       {showGemini ? (
-        <Gemini/>
-      ):(
-      <>
-        <MainComponent></MainComponent>
-        <SecondaryComponent></SecondaryComponent>
-      </>
+        <Gemini />
+      ) : (
+        <>
+          <MainComponent></MainComponent>
+          <SecondaryComponent></SecondaryComponent>
+        </>
       )}
     </div>
   );
 };
 
 export default Browse;
-

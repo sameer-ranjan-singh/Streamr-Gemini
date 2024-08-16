@@ -9,6 +9,7 @@ export const getNowPlayingMovies_URL = "https://api.themoviedb.org/3/movie/now_p
 export const getPopularMovies_URL = "https://api.themoviedb.org/3/movie/popular?page=1"
 export const getTopRatedMovies_URL = "https://api.themoviedb.org/3/movie/top_rated?page=1"
 export const getUpcomingMovies_URL = "https://api.themoviedb.org/3/movie/upcoming?page=1"
+export const getMovieTrailer_URL = (id)=> `https://api.themoviedb.org/3/movie/${id}/videos?language=en-US`
 
 //Search Movie By name 
 export const getMovieByName = (movieName) => `https://api.themoviedb.org/3/search/movie?query=${movieName}&include_adult=false&language=en-US&page=1`
@@ -21,4 +22,4 @@ export const API_OPTIONS = {
 	}
   };
   
-export const GEMINI_API_KEY = process.env.REACT_APP_GEMINI_API_KEY 
+export const GEMINI_API_KEY = process.env.REACT_APP_GEMINI_API_KEY
