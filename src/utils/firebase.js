@@ -2,17 +2,14 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyAMvqpwQ3XeBcqkSs4I1VXP-3wShPp7A4w",
-  authDomain: "streamr-d3fda.firebaseapp.com",
-  projectId: "streamr-d3fda",
-  storageBucket: "streamr-d3fda.appspot.com",
-  messagingSenderId: "875298074620",
-  appId: process.env.REACT_APP_FIREBASE_KEY
+  apiKey: process.env.REACT_APP_FIREBASE_KEY,
+  authDomain: "stream-d5716.firebaseapp.com",
+  projectId: "stream-d5716",
+  storageBucket: "stream-d5716.appspot.com",
+  messagingSenderId: "877801976482",
+  appId: "1:877801976482:web:ca70cd549467cc2be95dfb"
 };
 
 // Initialize Firebase

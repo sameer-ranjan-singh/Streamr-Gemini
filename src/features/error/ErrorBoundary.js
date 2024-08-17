@@ -11,7 +11,7 @@ function ErrorBoundary() {
         {error.status} : {error.statusText}
       </h1>
       <button
-        onClick={() => navigate("./login")}
+        onClick={() => navigate("/")}
         className="bg-black text-white font-extrabold p-2 mt-2 rounded-md shadow-md"
       >
         Back to Previous Page

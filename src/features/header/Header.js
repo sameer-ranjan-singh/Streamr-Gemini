@@ -67,33 +67,37 @@ const Header = () => {
       <img className="w-24  md:w-44  md:mx-0" alt="netflix logo" src={LOGO} />
       <div className="flex  w-1/2 justify-end items-center">
         {showGemini && (
-          <select
-            className="h-6 md:h-10 mr-2  text-sm md:text-base bg-gray-800 text-gray-200"
-            onChange={handleLanguageChange}
-          >
-            {SUPPORTED_LANGUAGES.map((language) => (
-              <option key={language.identifier} value={language.identifier}>
-                {language.name}
-              </option>
-            ))}
-          </select>
+          <>
+            <select
+              className="h-6 md:h-10 mr-2  text-sm md:text-base bg-gray-800 text-gray-200"
+              onChange={handleLanguageChange}
+            >
+              {SUPPORTED_LANGUAGES.map((language) => (
+                <option key={language.identifier} value={language.identifier}>
+                  {language.name}
+                </option>
+              ))}
+            </select>
+          </>
         )}
 
-        <button
-          className="px-2 md:px-3 h-7 md:h-9 text-sm md:text-lg md:rounded-md hover:bg-blue-800 hover:text-white font-bold bg-yellow-500 text-black"
-          onClick={handleGemniBtnClick}
-        >
-          {showGemini ? "Browse" : "Gen-AI"}
-        </button>
         {userInfo && (
-          <div className="flex pl-4 ">
+          <>
             <button
-              onClick={handleSignOut}
-              className="text-sm md:text-lg p-1 font-bold text-red-600 border border-red-600 hover:bg-red-600 hover:text-white"
+              className="px-2 md:px-3 h-7 md:h-9 text-sm md:text-lg md:rounded-md hover:bg-blue-800 hover:text-white font-bold bg-yellow-500 text-black"
+              onClick={handleGemniBtnClick}
             >
-              Logout
+              {showGemini ? "Browse" : "Gen-AI"}
             </button>
-          </div>
+            <div className="flex pl-4 ">
+              <button
+                onClick={handleSignOut}
+                className="text-sm md:text-lg p-1 font-bold text-red-600 border border-red-600 hover:bg-red-600 hover:text-white"
+              >
+                Logout
+              </button>
+            </div>
+          </>
         )}
       </div>
     </div>

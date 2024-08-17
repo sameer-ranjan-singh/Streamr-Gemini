@@ -1,16 +1,17 @@
 import { useDispatch, useSelector } from "react-redux";
 import { lang } from "../../../utils/languageConstants";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { model } from "../../../utils/genAI";
 import { API_OPTIONS, getMovieByName } from "../../../utils/constants";
 import { addGeminiResultMovies } from "../../../store/Slices/geminiSlice";
+import Loading from "../../shimmer/Loading";
 
 const GeminiSearchBar = () => {
   const storeLangKey = useSelector((store) => store.appConfig?.lang);
   const dispatch = useDispatch();
-
+  // const movieResults = useSelector((store)=> store.gemini.movieResults)
   const userText = useRef(null);
-
+  const [loading , setLoading] = useState(false)
   //searc movie from TMDB
   const searchMovieTMDB = async (movie) => {
     const result = await fetch(getMovieByName(movie), API_OPTIONS);
@@ -19,6 +20,7 @@ const GeminiSearchBar = () => {
   };
 
   const handleGeminiSearch = async () => {
+    setLoading(true)
     const userInputText = userText.current.value;
     const prompt =
       "Act as a movie recommendation system and query :" +
@@ -47,6 +49,7 @@ const GeminiSearchBar = () => {
         movieResults: promiseResultsTMDB,
       })
     );
+    setLoading(false)
   };
 
   return (
@@ -66,7 +69,7 @@ const GeminiSearchBar = () => {
           onClick={handleGeminiSearch}
           className="col-span-3  m-2 capitalize rounded-md text-sm md:text-lg font-bold text-white bg-red-700  hover:bg-red-600"
         >
-          {lang[storeLangKey].search}
+          {loading === false ? lang[storeLangKey].search : <Loading/> }
         </button>
       </form>
     </div>
